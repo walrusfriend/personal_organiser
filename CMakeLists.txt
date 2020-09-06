@@ -40,8 +40,8 @@ else()
     basescreen.h
     daywin.cpp
     daywin.h
-    monthOrYearChange.cpp
-    monthOrYearChange.h
+    monthoryearchange.h
+    monthoryearchange.cpp
   )
 endif()
 

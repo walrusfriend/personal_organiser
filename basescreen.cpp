@@ -1,10 +1,9 @@
 #include "basescreen.h"
 
 BaseScreen::BaseScreen() {
-    // Year label settings
-    year->setAlignment(Qt::AlignCenter);
 
     // Month label settings
+    year->setFlat(true);
     month->setFlat(true);
 
     // Base screen rendering
@@ -25,6 +24,7 @@ BaseScreen::BaseScreen() {
     setLayout(main_layout);
 
     // Linking objects
+    QObject::connect(year, SIGNAL(clicked()), this, SLOT(yearChange()));
     QObject::connect(month, SIGNAL(clicked()), this, SLOT(monthChange()));
 }
 
@@ -49,7 +49,7 @@ BaseScreen::~BaseScreen(){
 
 void BaseScreen::screenRefresh(QDate* date) {
     // Add year and month
-    year->setNum(date->year());
+    year->setText(QString::number(date->year()));
     month->setText(list_of_the_months[date->month() - 1]);
 
     // Define and check numbers of the month
@@ -63,7 +63,6 @@ void BaseScreen::screenRefresh(QDate* date) {
 
     // Turn off old widgets
     for(int i = 0; i < calendar_days.size(); i++) {
-        //DayWin* tmp = calendar_days[i];
         calendar_layout->removeWidget(calendar_days[i]);
         delete calendar_days[i];
     }
@@ -71,7 +70,7 @@ void BaseScreen::screenRefresh(QDate* date) {
     // Add dates to the grid
         // define what's day is first in month
     calendar_days.clear();
-    int8_t first_day = date->dayOfWeek() - (date->day() - 1) % 7;
+    int8_t first_day = date->dayOfWeek() - (date->day() % 7 - 1);
     for(int i = 0; i < number_of_days_in_month; i++) {
         DayWin* day = new DayWin(i + 1);
         calendar_layout->addWidget(day, (first_day + i - 1) / 7 + 3,
@@ -81,8 +80,8 @@ void BaseScreen::screenRefresh(QDate* date) {
 }
 
 void BaseScreen::monthChange(){
-    MonthChange* win = new MonthChange(curr_date->month());
-    QObject::connect(win, SIGNAL(monthChangeEvent(QString)), this, SLOT(changeCurrentMonth(QString)));
+    MonthOrYearChange* win = new MonthOrYearChange(curr_date->month());
+    QObject::connect(win, SIGNAL(changeMonthEvent(QString)), this, SLOT(changeCurrentMonth(QString)));
     win->exec();
 }
 
@@ -96,5 +95,16 @@ void BaseScreen::changeCurrentMonth(QString month_str) {
     }
 
     tmp_date->setDate(curr_date->year(), month_num, 1);
+    screenRefresh(tmp_date);
+}
+
+void BaseScreen::yearChange() {
+    MonthOrYearChange* tmp = new MonthOrYearChange(curr_date->year());
+    QObject::connect(tmp, SIGNAL(changeYearEvent(int16_t)), this, SLOT(changeCurrentYear(int16_t)));
+    tmp->exec();
+}
+
+void BaseScreen::changeCurrentYear(int16_t new_year) {
+    tmp_date->setDate(new_year, curr_date->month(), 1);
     screenRefresh(tmp_date);
 }

@@ -6,25 +6,27 @@
 #include "main.h"
 #include <QDialog>
 
-class monthOrYearChange : public QDialog
+class MonthOrYearChange : public QDialog
 {
     Q_OBJECT
 public:
-    monthOrYearChange(int curr_month);
-    ~monthOrYearChange();
+    MonthOrYearChange(int16_t curr);
+    ~MonthOrYearChange();
 
 private:
-    QString picked_month;
-
     QVector<QPushButton*> buttons;
     QGridLayout* grd = new QGridLayout;
     QPushButton* cancel_btn = new QPushButton("&Cancel");
 
+    void chooseMonth();
+    void chooseYear(int16_t curr);
+
 public slots:
-    void setMonth();
+    void setNewValue();
 
 signals:
-    void changeEvent(QString month);
+    void changeMonthEvent(QString month);
+    void changeYearEvent(int16_t year);
 };
 
 #endif // MONTHCHANGE_H

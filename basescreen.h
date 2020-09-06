@@ -6,7 +6,7 @@
 
 #include "main.h"
 #include "daywin.h"
-#include "monthchange.h"
+#include "monthoryearchange.h"
 
 class BaseScreen : public QWidget
 {
@@ -17,7 +17,7 @@ public:
     ~BaseScreen();
 
 private:
-    QLabel* year = new QLabel;
+    QPushButton* year = new QPushButton;
     QPushButton* month = new QPushButton;
     QDate* curr_date = new QDate(QDate::currentDate());
     QDate* tmp_date = new QDate;
@@ -33,6 +33,8 @@ private:
 
 public slots:
     void monthChange();
+    void yearChange();
+    void changeCurrentYear(int16_t);
     void changeCurrentMonth(QString);
 
 };
