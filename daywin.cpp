@@ -3,6 +3,7 @@
 DayWin::DayWin(int8_t day) {
     info->setNum(day);
     info->setFrameStyle(QFrame::Box | QFrame::Plain);
+    info->setAlignment(Qt::AlignCenter);
 
     // Layout
     pgrd->addWidget(info);
