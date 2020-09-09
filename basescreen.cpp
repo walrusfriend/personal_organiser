@@ -94,7 +94,7 @@ void BaseScreen::changeCurrentMonth(QString month_str) {
         }
     }
 
-    tmp_date->setDate(curr_date->year(), month_num, 1);
+    tmp_date->setDate(tmp_date->year(), month_num, 1);
     screenRefresh(tmp_date);
 }
 
@@ -105,6 +105,6 @@ void BaseScreen::yearChange() {
 }
 
 void BaseScreen::changeCurrentYear(int16_t new_year) {
-    tmp_date->setDate(new_year, curr_date->month(), 1);
+    tmp_date->setDate(new_year, tmp_date->month(), 1);
     screenRefresh(tmp_date);
 }

@@ -1,5 +1,4 @@
-#ifndef MONTHCHANGE_H
-#define MONTHCHANGE_H
+#pragma once
 
 // Pop-up screen for choosing a month or year
 
@@ -28,5 +27,3 @@ signals:
     void changeMonthEvent(QString month);
     void changeYearEvent(int16_t year);
 };
-
-#endif // MONTHCHANGE_H

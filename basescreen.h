@@ -20,7 +20,7 @@ private:
     QPushButton* year = new QPushButton;
     QPushButton* month = new QPushButton;
     QDate* curr_date = new QDate(QDate::currentDate());
-    QDate* tmp_date = new QDate;
+    QDate* tmp_date = new QDate(*curr_date);
 
     QHBoxLayout* buttons_layout = new QHBoxLayout;
     QGridLayout* calendar_layout = new QGridLayout;
